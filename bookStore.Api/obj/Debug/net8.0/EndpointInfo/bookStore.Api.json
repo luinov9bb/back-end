@@ -1,0 +1,27 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "bookStore.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Values/ping": {
+      "get": {
+        "tags": [
+          "Values"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": { },
+  "tags": [
+    {
+      "name": "Values"
+    }
+  ]
+}

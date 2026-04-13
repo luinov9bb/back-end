@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "bookStore.Api.Controller.ValuesController",
+    "Method": "Ping",
+    "RelativePath": "api/Values/ping",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

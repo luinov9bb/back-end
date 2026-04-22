@@ -31,7 +31,14 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj"
+              },
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -70,6 +77,212 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj",
+        "projectName": "bookStore.BusinessLogic",
+        "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj",
+        "packagesPath": "C:\\Users\\Yevhenii\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Yevhenii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj"
+              },
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj",
+        "projectName": "bookStore.DataAccess",
+        "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\Yevhenii\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Yevhenii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj",
+        "projectName": "bookStore.Domain",
+        "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj",
+        "packagesPath": "C:\\Users\\Yevhenii\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Yevhenii\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

@@ -110,6 +110,43 @@
         "build": {
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
+      },
+      "bookStore.BusinessLogic/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "bookStore.DataAccess": "1.0.0",
+          "bookStore.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/bookStore.BusinessLogic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/bookStore.BusinessLogic.dll": {}
+        }
+      },
+      "bookStore.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "bookStore.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/bookStore.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/bookStore.DataAccess.dll": {}
+        }
+      },
+      "bookStore.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/bookStore.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/bookStore.Domain.dll": {}
+        }
       }
     }
   },
@@ -343,11 +380,28 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "bookStore.BusinessLogic/1.0.0": {
+      "type": "project",
+      "path": "../bookStore.BusinessLogic/bookStore.BusinessLogic.csproj",
+      "msbuildProject": "../bookStore.BusinessLogic/bookStore.BusinessLogic.csproj"
+    },
+    "bookStore.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../bookStore.DataAccess/bookStore.DataAccess.csproj",
+      "msbuildProject": "../bookStore.DataAccess/bookStore.DataAccess.csproj"
+    },
+    "bookStore.Domain/1.0.0": {
+      "type": "project",
+      "path": "../bookStore.Domain/bookStore.Domain.csproj",
+      "msbuildProject": "../bookStore.Domain/bookStore.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "Swashbuckle.AspNetCore >= 10.1.7"
+      "Swashbuckle.AspNetCore >= 10.1.7",
+      "bookStore.BusinessLogic >= 1.0.0",
+      "bookStore.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -381,7 +435,14 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj"
+            },
+            "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+              "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

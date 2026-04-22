@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bookStore.Domain.Entities
 {
-    internal class Order
+    public class Order
     {
         public int Id { get; set; }
         public int UserId { get; set; }

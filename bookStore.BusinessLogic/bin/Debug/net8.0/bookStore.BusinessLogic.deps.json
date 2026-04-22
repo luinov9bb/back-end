@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "bookStore.BusinessLogic/1.0.0": {
+        "dependencies": {
+          "bookStore.DataAccess": "1.0.0",
+          "bookStore.Domain": "1.0.0"
+        },
+        "runtime": {
+          "bookStore.BusinessLogic.dll": {}
+        }
+      },
+      "bookStore.DataAccess/1.0.0": {
+        "dependencies": {
+          "bookStore.Domain": "1.0.0"
+        },
+        "runtime": {
+          "bookStore.DataAccess.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "bookStore.Domain/1.0.0": {
+        "runtime": {
+          "bookStore.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "bookStore.BusinessLogic/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "bookStore.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "bookStore.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

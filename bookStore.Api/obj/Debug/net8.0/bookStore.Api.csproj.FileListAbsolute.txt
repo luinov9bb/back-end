@@ -16,7 +16,6 @@ C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.AssemblyInfoInputs.cache
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.AssemblyInfo.cs
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.csproj.CoreCompileInputs.cache
-C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
@@ -33,3 +32,10 @@ C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.pdb
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.genruntimeconfig.cache
 C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\ref\bookStore.Api.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\obj\Debug\net8.0\bookStore.Api.sourcelink.json
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\bin\Debug\net8.0\bookStore.BusinessLogic.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\bin\Debug\net8.0\bookStore.DataAccess.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\bin\Debug\net8.0\bookStore.Domain.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\bin\Debug\net8.0\bookStore.BusinessLogic.pdb
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\bin\Debug\net8.0\bookStore.Domain.pdb
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.Api\bin\Debug\net8.0\bookStore.DataAccess.pdb

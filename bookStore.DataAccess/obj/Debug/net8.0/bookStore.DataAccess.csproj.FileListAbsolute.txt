@@ -1,0 +1,16 @@
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\bin\Debug\net8.0\bookStore.DataAccess.deps.json
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\bin\Debug\net8.0\bookStore.DataAccess.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\bin\Debug\net8.0\bookStore.DataAccess.pdb
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\bin\Debug\net8.0\bookStore.Domain.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\bin\Debug\net8.0\bookStore.Domain.pdb
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.csproj.AssemblyReference.cache
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.AssemblyInfo.cs
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.sourcelink.json
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStor.C2407A63.Up2Date
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\refint\bookStore.DataAccess.dll
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\bookStore.DataAccess.pdb
+C:\Users\Yevhenii\TWEB_project\Back-end\bookStore\bookStore.DataAccess\obj\Debug\net8.0\ref\bookStore.DataAccess.dll

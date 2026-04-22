@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Api\\bookStore.Api.csproj": {}
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\bookStore.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Api\\bookStore.Api.csproj": {
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\bookStore.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Api\\bookStore.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\bookStore.Api.csproj",
         "projectName": "bookStore.Api",
-        "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Api\\bookStore.Api.csproj",
-        "packagesPath": "C:\\Users\\murza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Api\\obj\\",
+        "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\bookStore.Api.csproj",
+        "packagesPath": "C:\\Users\\Yevhenii\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\murza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yevhenii\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,18 +26,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj": {
-                "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj"
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj"
               },
-              "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj": {
-                "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj"
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj"
               }
             }
           }
@@ -86,20 +85,20 @@
         }
       }
     },
-    "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj": {
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj",
+        "projectUniqueName": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj",
         "projectName": "bookStore.BusinessLogic",
-        "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj",
-        "packagesPath": "C:\\Users\\murza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.BusinessLogic\\obj\\",
+        "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\bookStore.BusinessLogic.csproj",
+        "packagesPath": "C:\\Users\\Yevhenii\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\murza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yevhenii\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -108,18 +107,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.DataAccess\\bookStore.DataAccess.csproj": {
-                "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.DataAccess\\bookStore.DataAccess.csproj"
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj"
               },
-              "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj": {
-                "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj"
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj"
               }
             }
           }
@@ -159,20 +157,20 @@
         }
       }
     },
-    "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.DataAccess\\bookStore.DataAccess.csproj": {
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.DataAccess\\bookStore.DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj",
         "projectName": "bookStore.DataAccess",
-        "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.DataAccess\\bookStore.DataAccess.csproj",
-        "packagesPath": "C:\\Users\\murza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.DataAccess\\obj\\",
+        "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\bookStore.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\Yevhenii\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\murza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yevhenii\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -181,15 +179,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj": {
-                "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj"
+              "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj"
               }
             }
           }
@@ -229,20 +226,20 @@
         }
       }
     },
-    "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj": {
+    "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj",
         "projectName": "bookStore.Domain",
-        "projectPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\bookStore.Domain.csproj",
-        "packagesPath": "C:\\Users\\murza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\murza\\Tweb_project\\back-end\\back-end\\bookStore.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj",
+        "packagesPath": "C:\\Users\\Yevhenii\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\murza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yevhenii\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -251,7 +248,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

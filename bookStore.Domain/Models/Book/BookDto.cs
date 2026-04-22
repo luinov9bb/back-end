@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bookStore.Domain.Models.Book
 {
-    internal class BookDto
+    public class BookDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;

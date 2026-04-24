@@ -1,17 +1,18 @@
-﻿using System;
+﻿using bookStore.Domain.Entities.User;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace bookStore.Domain.Entities
 {
     public class Order
     {
+        [Key]
         public int Id { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
         public int UserId { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+        public UserData? User { get; set; } // Связь с пользователем
         public decimal TotalPrice { get; set; }
-        public string Status { get; set; } = "New"; // New, Paid, Shipped
+        public List<OrderItem> OrderItems { get; set; } = new();
     }
 }

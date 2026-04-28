@@ -27,10 +27,6 @@
       "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70A2268A-AD4B-4D72-9A41-C4F80D72B195}|bookStore.DataAccess\\bookStore.DataAccess.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.dataaccess\\context\\bookstorecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70A2268A-AD4B-4D72-9A41-C4F80D72B195}|bookStore.DataAccess\\bookStore.DataAccess.csproj|solutionrelative:bookstore.dataaccess\\context\\bookstorecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -112,7 +108,7 @@
               "RelativeDocumentMoniker": "bookStore.Api\\Controller\\UserController.cs",
               "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\Controller\\UserController.cs",
               "RelativeToolTip": "bookStore.Api\\Controller\\UserController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-24T09:06:55.28Z",
               "EditorCaption": ""
@@ -131,7 +127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "AdminApi.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\Core\\AdminApi.cs",
               "RelativeDocumentMoniker": "bookStore.BusinessLogic\\Core\\AdminApi.cs",
@@ -167,7 +163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "OrderItem.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\OrderItem.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\OrderItem.cs",
@@ -176,18 +172,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-22T18:12:12.985Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BookStoreContext.cs",
-              "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\Context\\BookStoreContext.cs",
-              "RelativeDocumentMoniker": "bookStore.DataAccess\\Context\\BookStoreContext.cs",
-              "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\Context\\BookStoreContext.cs",
-              "RelativeToolTip": "bookStore.DataAccess\\Context\\BookStoreContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T20:07:12.535Z"
             },
             {
               "$type": "Document",
@@ -215,7 +199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "UserApi.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\Core\\UserApi.cs",
               "RelativeDocumentMoniker": "bookStore.BusinessLogic\\Core\\UserApi.cs",
@@ -227,7 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "BusinessLogic.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.BusinessLogic\\BusinessLogic.cs",
               "RelativeDocumentMoniker": "bookStore.BusinessLogic\\BusinessLogic.cs",
@@ -239,7 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "DbSession.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\DbSession.cs",
               "RelativeDocumentMoniker": "bookStore.DataAccess\\DbSession.cs",
@@ -251,7 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "OrderRequest.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Order\\OrderRequest.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Models\\Order\\OrderRequest.cs",
@@ -263,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "Book.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Book.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Book.cs",
@@ -275,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\Program.cs",
               "RelativeDocumentMoniker": "bookStore.Api\\Program.cs",
@@ -287,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "UserDto.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\User\\UserDto.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Models\\User\\UserDto.cs",
@@ -299,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "MapperProfiles.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\Mappings\\MapperProfiles.cs",
               "RelativeDocumentMoniker": "bookStore.Api\\Mappings\\MapperProfiles.cs",
@@ -311,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "OrderDto.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Order\\OrderDto.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Models\\Order\\OrderDto.cs",
@@ -323,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "ValuesController.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\Controller\\ValuesController.cs",
               "RelativeDocumentMoniker": "bookStore.Api\\Controller\\ValuesController.cs",
@@ -335,7 +319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "BookRequest.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Book\\BookRequest.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Models\\Book\\BookRequest.cs",
@@ -347,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 19,
               "Title": "BookDto.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Book\\BookDto.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Models\\Book\\BookDto.cs",
@@ -359,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 20,
               "Title": "bookStore.Api.csproj",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Api\\bookStore.Api.csproj",
               "RelativeDocumentMoniker": "bookStore.Api\\bookStore.Api.csproj",
@@ -371,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 21,
               "Title": "bookStore.Domain.csproj",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\bookStore.Domain.csproj",
               "RelativeDocumentMoniker": "bookStore.Domain\\bookStore.Domain.csproj",

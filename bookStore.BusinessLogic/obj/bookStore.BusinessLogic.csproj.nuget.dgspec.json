@@ -135,6 +135,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.26, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

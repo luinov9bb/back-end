@@ -1,0 +1,24 @@
+﻿using Microsoft.EntityFrameworkCore;
+using bookStore.Domain.Entities;
+
+namespace bookStore.DataAccess.Context
+{
+    public class BookContext : DbContext
+    {
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(DbSession.ConnectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserData>().ToTable("Users");
+        }
+    }
+}

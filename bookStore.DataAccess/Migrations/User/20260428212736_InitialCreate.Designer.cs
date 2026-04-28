@@ -9,11 +9,11 @@ using bookStore.DataAccess.Context;
 
 #nullable disable
 
-namespace bookStore.DataAccess.Migrations
+namespace bookStore.DataAccess.Migrations.User
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20260428131502_Initial")]
-    partial class Initial
+    [Migration("20260428212736_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

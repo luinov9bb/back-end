@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using bookStore.Domain.Entities;
 
 namespace bookStore.BusinessLogic.Interfaces
 {
     public interface ISession
     {
+        
+        UserMinimal UserLogin(ULoginData data);
     }
 }

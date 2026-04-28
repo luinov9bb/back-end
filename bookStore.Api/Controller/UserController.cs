@@ -1,5 +1,4 @@
 ﻿using bookStore.Domain.Entities;
-using bookStore.Domain.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookStore.Api.Controllers
@@ -38,11 +37,10 @@ namespace bookStore.Api.Controllers
         public IActionResult CreateUser([FromBody] UserData user)
         {
             user.Id = _nextId++;
-            user.CreatedAt = DateTime.UtcNow;
+            user.RegisteredOn = DateTime.UtcNow;
 
             _users.Add(user);
 
-            // Возвращает статус 201 Created и ссылку на объект
             return Created($"/api/users/{user.Id}", user);
         }
 
@@ -59,7 +57,6 @@ namespace bookStore.Api.Controllers
 
             existingUser.Username = updatedUser.Username;
             existingUser.Email = updatedUser.Email;
-            // Пароль и роль тоже можно обновить здесь при желании
 
             return Ok(existingUser);
         }
@@ -77,7 +74,7 @@ namespace bookStore.Api.Controllers
 
             _users.Remove(user);
 
-            return NoContent(); // Статус 204 (успешно, но возвращать нечего)
+            return NoContent();
         }
     }
 }

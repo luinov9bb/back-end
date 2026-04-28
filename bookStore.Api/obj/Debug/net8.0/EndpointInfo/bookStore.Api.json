@@ -5,6 +5,37 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Login/auth": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ULoginData"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ULoginData"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ULoginData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Users/all": {
       "get": {
         "tags": [
@@ -147,6 +178,28 @@
   },
   "components": {
     "schemas": {
+      "ULoginData": {
+        "type": "object",
+        "properties": {
+          "credential": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "loginIp": {
+            "type": "string",
+            "nullable": true
+          },
+          "loginDateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "UserData": {
         "required": [
           "email",
@@ -160,22 +213,22 @@
             "format": "int32"
           },
           "username": {
-            "minLength": 1,
+            "maxLength": 20,
+            "minLength": 3,
             "type": "string"
           },
           "email": {
-            "minLength": 1,
+            "maxLength": 30,
+            "minLength": 0,
             "type": "string"
           },
           "password": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "role": {
+            "maxLength": 50,
+            "minLength": 8,
             "type": "string",
-            "nullable": true
+            "format": "password"
           },
-          "createdAt": {
+          "registeredOn": {
             "type": "string",
             "format": "date-time"
           }
@@ -185,6 +238,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Login"
+    },
     {
       "name": "Users"
     },

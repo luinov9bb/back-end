@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "bookStore.Api.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "api/Login/auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequest",
+        "Type": "bookStore.Domain.Entities.ULoginData",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookStore.Api.Controllers.UsersController",
     "Method": "CreateUser",
     "RelativePath": "api/Users",
@@ -9,7 +25,7 @@
     "Parameters": [
       {
         "Name": "user",
-        "Type": "bookStore.Domain.Entities.User.UserData",
+        "Type": "bookStore.Domain.Entities.UserData",
         "IsRequired": true
       }
     ],
@@ -46,7 +62,7 @@
       },
       {
         "Name": "updatedUser",
-        "Type": "bookStore.Domain.Entities.User.UserData",
+        "Type": "bookStore.Domain.Entities.UserData",
         "IsRequired": true
       }
     ],

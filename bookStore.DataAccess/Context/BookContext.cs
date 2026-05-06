@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using bookStore.Domain.Entities;
+using bookStore.Domain.Entities.Book;
+using bookStore.Domain.Entities.Order;
 
 namespace bookStore.DataAccess.Context
 {

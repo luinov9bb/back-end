@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using bookStore.Domain.Entities;
+using bookStore.Domain.Entities.Book;
 using bookStore.Domain.Models.Book;
 
 namespace bookStore.Api.Mappings

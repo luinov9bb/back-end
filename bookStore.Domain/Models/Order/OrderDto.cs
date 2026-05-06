@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bookStore.Domain.Entities.Order;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,9 @@ namespace bookStore.Domain.Models.Order
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
-        public decimal TotalPrice { get; set; }
-        public string Status { get; set; } = "New"; 
+        public List<OrderItemDto> Items { get; set; }
+        public DateTime OrderDate { get; set; } 
+        public decimal Total { get; set; }
+        public OrderStatus Status { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace bookStore.BusinessLogic
 {
     public class BusinessLogic
     {
+        public BusinessLogic() { }
         public ISession GetSessionBL()
         {
             return new SessionBL();

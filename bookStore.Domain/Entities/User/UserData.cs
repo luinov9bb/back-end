@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bookStore.Domain.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,14 +19,20 @@ namespace bookStore.Domain.Entities
         [Required]
         [Display(Name = "Email Address")]
         [StringLength(30)]
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; } 
 
         [Required]
-        [DataType(DataType.Password)]
+        [Display(Name = "Password")]    
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long.")]
-        public string Password { get; set; } = string.Empty;
+        public string PasswordHash { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime RegisteredOn { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime RegisteredOn { get; set; } = DateTime.Now;
+
+        [Required]
+        public UserRole Role { get; set; } = UserRole.User;
+
+        public bool IsActive { get; set; } = true;
     }
 }

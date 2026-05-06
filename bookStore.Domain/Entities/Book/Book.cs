@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace bookStore.Domain.Entities
+namespace bookStore.Domain.Entities.Book
 {
     public class Book
     {
@@ -16,13 +16,18 @@ namespace bookStore.Domain.Entities
         [Required]
         public string Author { get; set; } = string.Empty;
 
-        public string Category { get; set; } = string.Empty;
+        public CategoryData Category { get; set; }
 
-        public string Description { get; set; } = string.Empty;
+        [Required]
+        [StringLength(500)]
+        public string? Description { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")] // Важно для цен
+        [Required]
         public decimal Price { get; set; }
 
-        public string? CoverImageUrl { get; set; }
+        public List<BookImgData> Images { get; set; } = new();
+
+        [Required]
+        public int Stock { get; set; }
     }
 }

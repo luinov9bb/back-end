@@ -1,0 +1,1645 @@
+﻿
+============================================
+BOOKSTORE BACKEND CODE DUMP
+Generated: 2026-05-06 18:18:38
+Project path: C:\Users\Yevhenii\TWEB_project\Back-end\bookStore
+============================================
+
+
+==================================================
+FILE: bookStore.Api\appsettings.Development.json
+==================================================
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}
+
+
+==================================================
+FILE: bookStore.Api\appsettings.json
+==================================================
+
+{
+  "ConnectionStrings": {
+    //"DefaultConnection": "Server=localhost;Database=bookStoreDb;User Id=sa;Password=YourStrong!Password123;TrustServerCertificate=True"
+    "DefaultConnection": "Server=localhost;Database=bookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+
+==================================================
+FILE: bookStore.Api\bookStore.Api.csproj
+==================================================
+
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.26" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.26">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\bookStore.BusinessLogic\bookStore.BusinessLogic.csproj" />
+    <ProjectReference Include="..\bookStore.Domain\bookStore.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
+
+
+==================================================
+FILE: bookStore.Api\Controller\LoginController.cs
+==================================================
+
+using Microsoft.AspNetCore.Mvc;
+using bookStore.BusinessLogic.Interfaces;
+using bookStore.Domain.Entities;
+using ISession = bookStore.BusinessLogic.Interfaces.ISession;
+
+namespace bookStore.Api.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LoginController : ControllerBase
+    {
+        private readonly ISession _session;
+
+        // DI
+        public LoginController(ISession session)
+        {
+            _session = session;
+        }
+
+        [HttpPost("auth")]
+        public IActionResult Login([FromBody] ULoginData loginRequest)
+        {
+            if (!ModelState.IsValid) return BadRequest("Неверные данные");
+
+            // Наполняем ULoginData данными о запросе
+            loginRequest.LoginIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+            loginRequest.LoginDateTime = DateTime.Now;
+
+            var result = _session.UserLogin(loginRequest);
+
+            if (result.Status)
+            {
+                //в API вместо Redirect возвращаем данные юзера
+                return Ok(new { Message = "Успешный вход", User = result.Username });
+            }
+
+            return Unauthorized(new { Message = result.StatusMsg });
+        }
+    }
+}
+
+==================================================
+FILE: bookStore.Api\Controller\UserController.cs
+==================================================
+
+using bookStore.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
+
+namespace bookStore.Api.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        // Временное хранилище в памяти
+        private static List<UserData> _users = new List<UserData>();
+        private static int _nextId = 1;
+
+        // 1. Получить всех пользователей
+        [HttpGet("all")]
+        public IActionResult GetAllUsers()
+        {
+            return Ok(_users);
+        }
+
+        // 2. Получить одного по ID
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            var user = _users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with ID {id} not found" });
+            }
+
+            return Ok(user);
+        }
+
+        // 3. Создать нового пользователя
+        [HttpPost]
+        public IActionResult CreateUser([FromBody] UserData user)
+        {
+            user.Id = _nextId++;
+            user.RegisteredOn = DateTime.UtcNow;
+
+            _users.Add(user);
+
+            return Created($"/api/users/{user.Id}", user);
+        }
+
+        // 4. Обновить данные
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser(int id, [FromBody] UserData updatedUser)
+        {
+            var existingUser = _users.FirstOrDefault(u => u.Id == id);
+
+            if (existingUser == null)
+            {
+                return NotFound(new { Message = $"User with ID {id} not found" });
+            }
+
+            existingUser.Username = updatedUser.Username;
+            existingUser.Email = updatedUser.Email;
+
+            return Ok(existingUser);
+        }
+
+        // 5. Удалить пользователя
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            var user = _users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with ID {id} not found" });
+            }
+
+            _users.Remove(user);
+
+            return NoContent();
+        }
+    }
+}
+
+==================================================
+FILE: bookStore.Api\Controller\ValuesController.cs
+==================================================
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace bookStore.Api.Controller
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ValuesController : ControllerBase
+    {
+        [HttpGet("ping")]
+        public IActionResult Ping()
+        {
+            return Ok("pong");
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Api\Program.cs
+==================================================
+
+using bookStore.BusinessLogic;
+
+var builder = WebApplication.CreateBuilder(args);
+
+bookStore.DataAccess.DbSession.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<bookStore.BusinessLogic.Interfaces.ISession, bookStore.BusinessLogic.SessionBL>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();
+
+
+==================================================
+FILE: bookStore.Api\Properties\launchSettings.json
+==================================================
+
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:6575",
+      "sslPort": 44357
+    }
+  },
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5268",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7130;http://localhost:5268",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+
+==================================================
+FILE: bookStore.BusinessLogic\bookStore.BusinessLogic.csproj
+==================================================
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\bookStore.DataAccess\bookStore.DataAccess.csproj" />
+    <ProjectReference Include="..\bookStore.Domain\bookStore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Auth\" />
+    <Folder Include="Core\Books\" />
+    <Folder Include="Core\Order\" />
+    <Folder Include="Functions\Auth\" />
+    <Folder Include="Functions\Books\" />
+    <Folder Include="Functions\Order\" />
+  </ItemGroup>
+
+</Project>
+
+
+==================================================
+FILE: bookStore.BusinessLogic\BusinessLogic.cs
+==================================================
+
+using bookStore.BusinessLogic.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.BusinessLogic
+{
+    public class BusinessLogic
+    {
+        public BusinessLogic() { }
+        public ISession GetSessionBL()
+        {
+            return new SessionBL();
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.BusinessLogic\Core\AdminApi.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.BusinessLogic.Core
+{
+    internal class AdminApi
+    {
+    }
+}
+
+
+==================================================
+FILE: bookStore.BusinessLogic\Core\UserApi.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.BusinessLogic.Core
+{
+    public class UserApi
+    {
+    }
+}
+
+
+==================================================
+FILE: bookStore.BusinessLogic\Interfaces\IOrderAction.cs
+==================================================
+
+using bookStore.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using bookStore.Domain.Models.Order;
+using bookStore.Domain.Models.Base;
+
+namespace bookStore.BusinessLogic.Interfaces
+{
+    public interface IOrderAction
+    {
+        List<OrderItemDto> GetAllOrders();
+    }
+}
+
+
+==================================================
+FILE: bookStore.BusinessLogic\Interfaces\ISession.cs
+==================================================
+
+using bookStore.Domain.Entities;
+
+namespace bookStore.BusinessLogic.Interfaces
+{
+    public interface ISession
+    {
+        
+        UserMinimal UserLogin(ULoginData data);
+    }
+}
+
+==================================================
+FILE: bookStore.BusinessLogic\SessionBL.cs
+==================================================
+
+using bookStore.BusinessLogic.Core;
+using bookStore.BusinessLogic.Interfaces;
+using bookStore.Domain.Entities;
+
+namespace bookStore.BusinessLogic
+{
+    // нследуемся от UserApi и реализуем интерфейс ISession
+    public class SessionBL : UserApi, ISession
+    {
+        public UserMinimal UserLogin(ULoginData data)
+        {
+            //  проверка (потом заменим на запрос к БД)
+            if (data.Credential == "admin" && data.Password == "123")
+            {
+                return new UserMinimal { Status = true, Username = "Admin" };
+            }
+
+            return new UserMinimal { Status = false, StatusMsg = "Неверный логин или пароль" };
+        }
+    }
+}
+
+==================================================
+FILE: bookStore.DataAccess\bookStore.DataAccess.csproj
+==================================================
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.26" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.26">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\bookStore.Domain\bookStore.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
+
+
+==================================================
+FILE: bookStore.DataAccess\Context\BookContext.cs
+==================================================
+
+using Microsoft.EntityFrameworkCore;
+using bookStore.Domain.Entities.Book;
+using bookStore.Domain.Entities.Order;
+
+namespace bookStore.DataAccess.Context
+{
+    public class BookContext : DbContext
+    {
+        public BookContext() { }
+        
+        public BookContext(DbContextOptions<BookContext> options) : base(options) { }
+
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(DbSession.ConnectionString);
+            }
+        }
+    }
+}
+
+==================================================
+FILE: bookStore.DataAccess\Context\BookContextFactory.cs
+==================================================
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+
+namespace bookStore.DataAccess.Context
+{
+    public class BookContextFactory : IDesignTimeDbContextFactory<BookContext>
+    {
+        public BookContext CreateDbContext(string[] args)
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../bookStore.Api"))
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            var optionsBuilder = new DbContextOptionsBuilder<BookContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            return new BookContext();
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.DataAccess\Context\UserContext.cs
+==================================================
+
+using Microsoft.EntityFrameworkCore;
+using bookStore.Domain.Entities;
+
+namespace bookStore.DataAccess.Context
+{
+    public class UserContext : DbContext
+    {
+        public UserContext() { }
+        
+        public UserContext(DbContextOptions<UserContext> options) : base(options) { }
+
+        public virtual DbSet<UserData> Users { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(DbSession.ConnectionString);
+            }
+        }
+    }
+}
+
+==================================================
+FILE: bookStore.DataAccess\Context\UserContextFactory.cs
+==================================================
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+
+namespace bookStore.DataAccess.Context
+{
+    public class UserContextFactory : IDesignTimeDbContextFactory<UserContext>
+    {
+        public UserContext CreateDbContext(string[] args)
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../bookStore.Api"))
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            var optionsBuilder = new DbContextOptionsBuilder<UserContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            return new UserContext();
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.DataAccess\DbSession.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.DataAccess
+{
+    public class DbSession
+    {
+        public static string ConnectionString { get; set; } = "Server=localhost;Database=bookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;";
+    }
+}
+
+
+==================================================
+FILE: bookStore.DataAccess\Migrations\20260428212628_InitialCreate.cs
+==================================================
+
+using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace bookStore.DataAccess.Migrations
+{
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CoverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_BookId",
+                table: "OrderItems",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
+                name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.DataAccess\Migrations\BookContextModelSnapshot.cs
+==================================================
+
+// <auto-generated />
+using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using bookStore.DataAccess.Context;
+
+#nullable disable
+
+namespace bookStore.DataAccess.Migrations
+{
+    [DbContext(typeof(BookContext))]
+    partial class BookContextModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.26")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("bookStore.Domain.Entities.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("bookStore.Domain.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("bookStore.Domain.Entities.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("bookStore.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("bookStore.Domain.Entities.UserData", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("bookStore.Domain.Entities.OrderItem", b =>
+                {
+                    b.HasOne("bookStore.Domain.Entities.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("bookStore.Domain.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("bookStore.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.DataAccess\Migrations\User\20260428212736_InitialCreate.cs
+==================================================
+
+using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace bookStore.DataAccess.Migrations.User
+{
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RegisteredOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Users");
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.DataAccess\Migrations\User\UserContextModelSnapshot.cs
+==================================================
+
+// <auto-generated />
+using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using bookStore.DataAccess.Context;
+
+#nullable disable
+
+namespace bookStore.DataAccess.Migrations.User
+{
+    [DbContext(typeof(UserContext))]
+    partial class UserContextModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.26")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("bookStore.Domain.Entities.UserData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("RegisteredOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\bookStore.Domain.csproj
+==================================================
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
+
+
+==================================================
+FILE: bookStore.Domain\Entities\Book\Book.cs
+==================================================
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace bookStore.Domain.Entities.Book
+{
+    public class Book
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Title { get; set; } = string.Empty;
+
+        [Required]
+        public string Author { get; set; } = string.Empty;
+
+        public CategoryData Category { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string? Description { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
+
+        public List<BookImgData> Images { get; set; } = new();
+
+        [Required]
+        public int Stock { get; set; }
+    }
+}
+
+==================================================
+FILE: bookStore.Domain\Entities\Book\BookImgData.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Entities.Book
+{
+    public class BookImgData
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        public string Url { get; set; }
+
+        [Required]
+        public int BookId { get; set; }
+
+        public bool IsActive { get; set; } = true;
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Entities\Book\CategoryData.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Entities.Book
+{
+    public class CategoryData
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Category")]
+        [StringLength(50)]
+        public string Name { get; set; }
+
+        public bool isActive { get; set; } = true;
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Entities\Cart\Cart.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Entities.Cart
+{
+    [Table("Carts")]
+    public class Cart
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "User")]
+        public int UserId { get; set; }
+
+        [Required]
+        [Display(Name = "CreatedAt")]
+        public DateTime CreatedAt { get; set; }
+
+        [Display(Name = "UpdatedAt")]
+        public DateTime? UpdatedAt { get; set; }
+
+        public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Entities\Cart\CartItem.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Entities.Cart
+{
+    [Table("CartItems")]
+    public class CartItem
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Cart")]
+        public int CartId { get; set; }
+
+        [Required]
+        [Display(Name = "Book")]
+        public int BookId { get; set; }
+
+        [Required]
+        [Display(Name = "Quantity")]
+        [Range(1, int.MaxValue)]
+        public int Quantity { get; set; } = 1;
+
+        [ForeignKey(nameof(CartId))]
+        public Cart Cart { get; set; } = null!;
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Entities\Order\Order.cs
+==================================================
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace bookStore.Domain.Entities.Order
+{
+    public class Order
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public int UserId { get; set; }
+
+        public DateTime OrderDate { get; set; }
+        public decimal TotalPrice { get; set; }
+
+        public OrderStatus Status { get; set; }
+
+        [InverseProperty("Order")]
+        public List<OrderItem> Items { get; set; }
+        
+        public bool IsDeleted  { get; set; }
+    }
+}
+
+==================================================
+FILE: bookStore.Domain\Entities\Order\OrderItem.cs
+==================================================
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace bookStore.Domain.Entities.Order
+{
+    public class OrderItem
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int OrderId { get; set; }
+
+        [ForeignKey ("OrderId")]
+        public Order Order { get; set; }
+        public string BookInfo { get; set; }
+
+        [Required]
+        public int Quantity { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
+    }
+}
+
+==================================================
+FILE: bookStore.Domain\Entities\Order\OrderStatus.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Entities.Order
+{
+    public enum OrderStatus
+    {
+        None,
+        Declined,
+        Accepted,
+        Validating,
+        Paid,
+        Delivered,
+        Refund
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Entities\User\ULoginData.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Entities
+{
+    public class ULoginData
+    {
+        public string Credential { get; set; }
+
+       public string Password { get; set; }
+
+       public string LoginIp { get; set; }
+
+        public DateTime LoginDateTime { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Entities\User\UserData.cs
+==================================================
+
+using bookStore.Domain.Enums;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace bookStore.Domain.Entities
+{
+    public class UserData
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Username must be between 3 and 20 characters long.")]
+        public string Username { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name = "Email Address")]
+        [StringLength(30)]
+        public string Email { get; set; } 
+
+        [Required]
+        [Display(Name = "Password")]    
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long.")]
+        public string PasswordHash { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime RegisteredOn { get; set; } = DateTime.Now;
+
+        [Required]
+        public UserRole Role { get; set; } = UserRole.User;
+
+        public bool IsActive { get; set; } = true;
+    }
+}
+
+==================================================
+FILE: bookStore.Domain\Entities\User\UserMinimal.cs
+==================================================
+
+namespace bookStore.Domain.Entities
+{
+    public class UserMinimal
+    {
+        public bool Status { get; set; }
+        public string StatusMsg { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+        
+    }
+}
+
+==================================================
+FILE: bookStore.Domain\Enums\UserRole.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Enums
+{
+    public enum UserRole
+    {
+        User,
+        Admin
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Base\ResponceAction.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Base
+{
+    public class ResponceAction
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+
+        public int Id { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Base\ResponceMsg.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Base
+{
+    public class ResponceMsg
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Book\BookDto.cs
+==================================================
+
+using bookStore.Domain.Entities.Book;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Book
+{
+    public class BookDto
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Author { get; set; } = string.Empty;
+        public string Category { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string? CoverImageUrl { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Cart\CartDto.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Cart
+{
+    public class CartDto
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public List<CartItemDto> Items { get; set; } = new();
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Cart\CartItemDto.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Cart
+{
+    public class CartItemDto
+    {
+        public int Id { get; set; }
+        public int CartId { get; set; }
+        public int BookId { get; set; }
+        public int Quantity { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Order\OrderDto.cs
+==================================================
+
+using bookStore.Domain.Entities.Order;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Order
+{
+    public class OrderDto
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public List<OrderItemDto> Items { get; set; }
+        public DateTime OrderDate { get; set; } 
+        public decimal Total { get; set; }
+        public OrderStatus Status { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Order\OrderItemDto.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Order
+{
+    public class OrderItemDto
+    {
+        public int Id { get; set; }
+        public decimal Price { get; set; }
+
+        public string BookInfo { get; set; }
+        public int Quantity { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\User\UserCreateDto.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.User
+{
+    public class UserCreateDto
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\User\UserDto.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.User
+{
+    public class UserDto
+    {
+        public int Id { get; set; }
+        public string Username { get; set; } 
+        public string Email { get; set; } 
+        public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\User\UserUpdateDto.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.User
+{
+    public class UserUpdateDto
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+    }
+}
+
+
+==================================================
+FILE: bookStore.sln
+==================================================
+
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36915.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookStore.Api", "bookStore.Api\bookStore.Api.csproj", "{AB1EF9D6-627D-4248-9A33-B40FCE8F7AA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookStore.Domain", "bookStore.Domain\bookStore.Domain.csproj", "{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookStore.DataAccess", "bookStore.DataAccess\bookStore.DataAccess.csproj", "{70A2268A-AD4B-4D72-9A41-C4F80D72B195}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookStore.BusinessLogic", "bookStore.BusinessLogic\bookStore.BusinessLogic.csproj", "{6BFB1180-C4D4-4563-817C-E5B90E49A05A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB1EF9D6-627D-4248-9A33-B40FCE8F7AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB1EF9D6-627D-4248-9A33-B40FCE8F7AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB1EF9D6-627D-4248-9A33-B40FCE8F7AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1EF9D6-627D-4248-9A33-B40FCE8F7AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70A2268A-AD4B-4D72-9A41-C4F80D72B195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A2268A-AD4B-4D72-9A41-C4F80D72B195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A2268A-AD4B-4D72-9A41-C4F80D72B195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A2268A-AD4B-4D72-9A41-C4F80D72B195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BFB1180-C4D4-4563-817C-E5B90E49A05A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BFB1180-C4D4-4563-817C-E5B90E49A05A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BFB1180-C4D4-4563-817C-E5B90E49A05A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BFB1180-C4D4-4563-817C-E5B90E49A05A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F834FD5A-F236-4D9D-8D2A-20FEF116B0E9}
+	EndGlobalSection
+EndGlobal
+

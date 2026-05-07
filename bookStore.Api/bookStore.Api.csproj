@@ -21,4 +21,8 @@
     <ProjectReference Include="..\bookStore.Domain\bookStore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

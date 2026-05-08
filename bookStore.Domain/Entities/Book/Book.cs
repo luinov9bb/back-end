@@ -17,12 +17,6 @@ namespace bookStore.Domain.Entities
         public string Author { get; set; } = string.Empty;
 
         [Required]
-        public int CategoryId { get; set; }
-
-        [ForeignKey("CategoryId")]
-        public CategoryData Category { get; set; }
-
-        [Required]
         [StringLength(500)]
         public string? Description { get; set; }
 
@@ -34,6 +28,7 @@ namespace bookStore.Domain.Entities
         [Required]
         public int Stock { get; set; }
 
+        public List< BookCategory> BookCategories { get; set; } = new();
         public List<Cart.CartItem> CartItems { get; set; } = new();
         public List<Favorite.Favorite> Favorites { get; set; } = new();
         public List<Review.Review> Reviews { get; set; } = new();

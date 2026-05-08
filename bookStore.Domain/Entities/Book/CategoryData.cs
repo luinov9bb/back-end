@@ -21,6 +21,6 @@ namespace bookStore.Domain.Entities
 
         public bool isActive { get; set; } = true;
 
-        public List<Book> Books { get; set; } = new();
+        public List<BookCategory> BookCategories { get; set; } = new();
     }
 }

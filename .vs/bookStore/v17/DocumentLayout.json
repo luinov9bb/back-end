@@ -3,20 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\order\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\order\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\user\\userdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\user\\userdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\favorite\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\favorite\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\review\\review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\review\\review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\user\\userdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\user\\userdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\models\\review\\updatereviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\models\\review\\updatereviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\models\\review\\createreviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\models\\review\\createreviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\models\\review\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\models\\review\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\models\\user\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\models\\user\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\order\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\order\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\favorite\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|solutionrelative:bookstore.domain\\entities\\favorite\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A94E31B5-3B69-4623-87A7-249FFBB9A0FA}|bookStore.Domain\\bookStore.Domain.csproj|c:\\users\\yevhenii\\tweb_project\\back-end\\bookstore\\bookstore.domain\\entities\\book\\categorydata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -58,11 +78,76 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
+              "Title": "CreateReviewDto.cs",
+              "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Review\\CreateReviewDto.cs",
+              "RelativeDocumentMoniker": "bookStore.Domain\\Models\\Review\\CreateReviewDto.cs",
+              "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Review\\CreateReviewDto.cs",
+              "RelativeToolTip": "bookStore.Domain\\Models\\Review\\CreateReviewDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T18:21:23.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UpdateReviewDto.cs",
+              "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Review\\UpdateReviewDto.cs",
+              "RelativeDocumentMoniker": "bookStore.Domain\\Models\\Review\\UpdateReviewDto.cs",
+              "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Review\\UpdateReviewDto.cs",
+              "RelativeToolTip": "bookStore.Domain\\Models\\Review\\UpdateReviewDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T18:21:02.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ReviewDto.cs",
+              "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Review\\ReviewDto.cs",
+              "RelativeDocumentMoniker": "bookStore.Domain\\Models\\Review\\ReviewDto.cs",
+              "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\Review\\ReviewDto.cs",
+              "RelativeToolTip": "bookStore.Domain\\Models\\Review\\ReviewDto.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T18:19:55.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Review.cs",
+              "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Review\\Review.cs",
+              "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Review\\Review.cs",
+              "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Review\\Review.cs",
+              "RelativeToolTip": "bookStore.Domain\\Entities\\Review\\Review.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T18:17:28.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\User\\UserDto.cs",
+              "RelativeDocumentMoniker": "bookStore.Domain\\Models\\User\\UserDto.cs",
+              "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Models\\User\\UserDto.cs",
+              "RelativeToolTip": "bookStore.Domain\\Models\\User\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T18:14:27.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Order\\Order.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Order\\Order.cs",
@@ -75,7 +160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "CategoryData.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Book\\CategoryData.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Book\\CategoryData.cs",
@@ -83,25 +168,24 @@
               "RelativeToolTip": "bookStore.Domain\\Entities\\Book\\CategoryData.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAIwBkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T11:40:07.972Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T11:40:07.972Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "UserData.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\User\\UserData.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\User\\UserData.cs",
               "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\User\\UserData.cs",
               "RelativeToolTip": "bookStore.Domain\\Entities\\User\\UserData.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAUwCcAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAUwCgAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-05T12:12:57.938Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "Favorite.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Favorite\\Favorite.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Favorite\\Favorite.cs",
@@ -109,12 +193,11 @@
               "RelativeToolTip": "bookStore.Domain\\Entities\\Favorite\\Favorite.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABEAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T14:27:19.808Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-07T14:27:19.808Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "Cart.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Cart\\Cart.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Cart\\Cart.cs",
@@ -122,12 +205,11 @@
               "RelativeToolTip": "bookStore.Domain\\Entities\\Cart\\Cart.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAUwBYAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T13:02:10.502Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T13:02:10.502Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "CartItem.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Cart\\CartItem.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Cart\\CartItem.cs",
@@ -135,12 +217,11 @@
               "RelativeToolTip": "bookStore.Domain\\Entities\\Cart\\CartItem.cs",
               "ViewState": "AgIAABIAAAAAAAAAAADwvx4AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T13:03:14.611Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T13:03:14.611Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "BookImgData.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Book\\BookImgData.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Book\\BookImgData.cs",
@@ -152,7 +233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "OrderStatus.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Order\\OrderStatus.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Order\\OrderStatus.cs",
@@ -164,7 +245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "OrderItem.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Order\\OrderItem.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Order\\OrderItem.cs",
@@ -182,14 +263,14 @@
               "RelativeDocumentMoniker": "bookStore.Domain\\Entities\\Book\\Book.cs",
               "ToolTip": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Entities\\Book\\Book.cs",
               "RelativeToolTip": "bookStore.Domain\\Entities\\Book\\Book.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAIwCUAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAmwCUAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-22T16:45:30.215Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "DbSession.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.DataAccess\\DbSession.cs",
               "RelativeDocumentMoniker": "bookStore.DataAccess\\DbSession.cs",
@@ -201,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "UserRole.cs",
               "DocumentMoniker": "C:\\Users\\Yevhenii\\TWEB_project\\Back-end\\bookStore\\bookStore.Domain\\Enums\\UserRole.cs",
               "RelativeDocumentMoniker": "bookStore.Domain\\Enums\\UserRole.cs",

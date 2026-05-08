@@ -36,5 +36,6 @@ namespace bookStore.Domain.Entities
 
         public List<Cart.CartItem> CartItems { get; set; } = new();
         public List<Favorite.Favorite> Favorites { get; set; } = new();
+        public List<Review.Review> Reviews { get; set; } = new();
     }
 }

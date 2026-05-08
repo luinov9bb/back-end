@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bookStore.Domain.Entities.Book
+namespace bookStore.Domain.Entities
 {
     public class BookImgData
     {
@@ -19,6 +19,9 @@ namespace bookStore.Domain.Entities.Book
 
         [Required]
         public int BookId { get; set; }
+
+        [ForeignKey("BookId")]
+        public virtual Book Book { get; set; } = null!;
 
         public bool IsActive { get; set; } = true;
     }

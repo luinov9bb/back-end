@@ -1,22 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
-using bookStore.Domain.Entities;
+﻿using bookStore.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace bookStore.DataAccess.Context
 {
     public class UserContext : DbContext
     {
-        public UserContext() { }
-        
-        public UserContext(DbContextOptions<UserContext> options) : base(options) { }
-
-        public virtual DbSet<UserData> Users { get; set; }
+        public DbSet<UserData> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(DbSession.ConnectionString);
-            }
+            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserData>()
+                .ToTable("Users");
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

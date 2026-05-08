@@ -30,5 +30,8 @@ namespace bookStore.Domain.Entities.Cart
 
         [ForeignKey(nameof(CartId))]
         public Cart Cart { get; set; } = null!;
+
+        [ForeignKey(nameof(BookId))]
+        public virtual Book Book { get; set; } = null!;
     }
 }

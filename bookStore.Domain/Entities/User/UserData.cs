@@ -34,5 +34,9 @@ namespace bookStore.Domain.Entities
         public UserRole Role { get; set; } = UserRole.User;
 
         public bool IsActive { get; set; } = true;
+
+        public List<Order.Order> Orders { get; set; } = new();
+        public List<Cart.Cart> Carts { get; set; } = new();
+        public List<Favorite.Favorite> Favorites { get; set; } = new();
     }
 }

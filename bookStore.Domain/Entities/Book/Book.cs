@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace bookStore.Domain.Entities.Book
+namespace bookStore.Domain.Entities
 {
     public class Book
     {
@@ -16,6 +16,10 @@ namespace bookStore.Domain.Entities.Book
         [Required]
         public string Author { get; set; } = string.Empty;
 
+        [Required]
+        public int CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
         public CategoryData Category { get; set; }
 
         [Required]
@@ -29,5 +33,8 @@ namespace bookStore.Domain.Entities.Book
 
         [Required]
         public int Stock { get; set; }
+
+        public List<Cart.CartItem> CartItems { get; set; } = new();
+        public List<Favorite.Favorite> Favorites { get; set; } = new();
     }
 }

@@ -1,25 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using bookStore.Domain.Entities.Book;
-using bookStore.Domain.Entities.Order;
+﻿using bookStore.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace bookStore.DataAccess.Context
 {
     public class BookContext : DbContext
     {
-        public BookContext() { }
-        
-        public BookContext(DbContextOptions<BookContext> options) : base(options) { }
-
-        public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookImgData> BookImgs { get; set; }
+        public DbSet<CategoryData> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(DbSession.ConnectionString);
-            }
+            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
         }
     }
 }

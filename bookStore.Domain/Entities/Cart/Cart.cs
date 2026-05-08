@@ -17,7 +17,10 @@ namespace bookStore.Domain.Entities.Cart
 
         [Required]
         [Display(Name = "User")]
+        [ForeignKey(nameof(UserId))]    
         public int UserId { get; set; }
+
+        public UserData User { get; set; } = null!;
 
         [Required]
         [Display(Name = "CreatedAt")]

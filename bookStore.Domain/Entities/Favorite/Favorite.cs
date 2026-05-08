@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using bookStore.Domain.Entities;
 
 namespace bookStore.Domain.Entities.Favorite
 {
@@ -14,8 +15,15 @@ namespace bookStore.Domain.Entities.Favorite
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public int UserId { get; set; } 
+        [Required]
+        [ForeignKey(nameof(UserId))]
+        public int UserId { get; set; }
 
-        public int BookId { get; set; } 
+        [Required]
+        [ForeignKey(nameof(BookId))]
+        public int BookId { get; set; }
+
+        public UserData User { get; set; } = null!;
+        public virtual Book Book { get; set; }  
     }
 }

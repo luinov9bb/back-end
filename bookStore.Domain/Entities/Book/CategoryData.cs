@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bookStore.Domain.Entities.Book
+namespace bookStore.Domain.Entities
 {
     public class CategoryData
     {
@@ -20,5 +20,7 @@ namespace bookStore.Domain.Entities.Book
         public string Name { get; set; }
 
         public bool isActive { get; set; } = true;
+
+        public List<Book> Books { get; set; } = new();
     }
 }

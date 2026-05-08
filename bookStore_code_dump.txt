@@ -1,7 +1,7 @@
 ﻿
 ============================================
 BOOKSTORE BACKEND CODE DUMP
-Generated: 2026-05-06 18:18:38
+Generated: 2026-05-08 20:19:39
 Project path: C:\Users\Yevhenii\TWEB_project\Back-end\bookStore
 ============================================
 
@@ -52,7 +52,6 @@ FILE: bookStore.Api\bookStore.Api.csproj
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="16.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.26" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.26">
       <PrivateAssets>all</PrivateAssets>
@@ -64,6 +63,10 @@ FILE: bookStore.Api\bookStore.Api.csproj
   <ItemGroup>
     <ProjectReference Include="..\bookStore.BusinessLogic\bookStore.BusinessLogic.csproj" />
     <ProjectReference Include="..\bookStore.Domain\bookStore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>
@@ -321,6 +324,10 @@ FILE: bookStore.BusinessLogic\bookStore.BusinessLogic.csproj
     <Folder Include="Functions\Order\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
 </Project>
 
 
@@ -422,6 +429,76 @@ namespace bookStore.BusinessLogic.Interfaces
 }
 
 ==================================================
+FILE: bookStore.BusinessLogic\Mapping\BookMappingProfile.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
+using bookStore.Domain.Entities.Book;
+using bookStore.Domain.Models.Book;
+
+namespace bookStore.BusinessLogic.Mapping
+{
+    public class BookMappingProfile : Profile
+    {
+        public BookMappingProfile()
+        {
+            CreateMap<Book, BookDto>()
+                .ForMember(dest => dest.Category,
+                    opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.CoverImageUrl,
+                    opt => opt.MapFrom(src =>
+                        src.Images.FirstOrDefault(i => i.IsActive)!.Url));
+
+            CreateMap<BookDto, Book>();
+        }
+    }
+}
+
+
+==================================================
+FILE: bookStore.BusinessLogic\Mapping\MapperConfig.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
+
+namespace bookStore.BusinessLogic.Mapping
+{
+    public static class MapperConfig
+    {
+        private static IMapper? _mapper;
+
+        public static IMapper Mapper
+        {
+            get
+            {
+                if (_mapper == null)
+                {
+                    var config = new MapperConfiguration(cfg =>
+                    {
+                        cfg.AddProfile<BookMappingProfile>();
+                    });
+
+                    _mapper = config.CreateMapper();
+                }
+
+                return _mapper;
+            }
+        }
+    }
+}
+
+
+==================================================
 FILE: bookStore.BusinessLogic\SessionBL.cs
 ==================================================
 
@@ -472,6 +549,10 @@ FILE: bookStore.DataAccess\bookStore.DataAccess.csproj
     <ProjectReference Include="..\bookStore.Domain\bookStore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
 
 
@@ -479,58 +560,98 @@ FILE: bookStore.DataAccess\bookStore.DataAccess.csproj
 FILE: bookStore.DataAccess\Context\BookContext.cs
 ==================================================
 
+using bookStore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using bookStore.Domain.Entities.Book;
-using bookStore.Domain.Entities.Order;
 
 namespace bookStore.DataAccess.Context
 {
     public class BookContext : DbContext
     {
-        public BookContext() { }
-        
-        public BookContext(DbContextOptions<BookContext> options) : base(options) { }
-
-        public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookImgData> BookImgs { get; set; }
+        public DbSet<CategoryData> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(DbSession.ConnectionString);
-            }
+            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
         }
     }
 }
 
 ==================================================
-FILE: bookStore.DataAccess\Context\BookContextFactory.cs
+FILE: bookStore.DataAccess\Context\CartContext.cs
 ==================================================
 
+using bookStore.Domain.Entities.Cart;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace bookStore.DataAccess.Context
 {
-    public class BookContextFactory : IDesignTimeDbContextFactory<BookContext>
+    public class CartContext : DbContext
     {
-        public BookContext CreateDbContext(string[] args)
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../bookStore.Api"))
-                .AddJsonFile("appsettings.json")
-                .Build();
+            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
+        }
+    }
+}
 
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            var optionsBuilder = new DbContextOptionsBuilder<BookContext>();
-            optionsBuilder.UseSqlServer(connectionString);
+==================================================
+FILE: bookStore.DataAccess\Context\FavoriteContext.cs
+==================================================
 
-            return new BookContext();
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using bookStore.Domain.Entities.Favorite; 
+using bookStore.Domain.Entities;
+
+namespace bookStore.DataAccess.Context
+{
+    public class FavoriteContext : DbContext
+    {
+        public DbSet<Favorite> Favorites { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
+        }
+    }
+}
+
+==================================================
+FILE: bookStore.DataAccess\Context\OrderContext.cs
+==================================================
+
+using bookStore.Domain.Entities.Order;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.DataAccess.Context
+{
+    public class OrderContext : DbContext
+    {
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
         }
     }
 }
@@ -540,55 +661,31 @@ namespace bookStore.DataAccess.Context
 FILE: bookStore.DataAccess\Context\UserContext.cs
 ==================================================
 
-using Microsoft.EntityFrameworkCore;
 using bookStore.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace bookStore.DataAccess.Context
 {
     public class UserContext : DbContext
     {
-        public UserContext() { }
-        
-        public UserContext(DbContextOptions<UserContext> options) : base(options) { }
-
-        public virtual DbSet<UserData> Users { get; set; }
+        public DbSet<UserData> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(DbSession.ConnectionString);
-            }
+            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
         }
-    }
-}
 
-==================================================
-FILE: bookStore.DataAccess\Context\UserContextFactory.cs
-==================================================
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-
-namespace bookStore.DataAccess.Context
-{
-    public class UserContextFactory : IDesignTimeDbContextFactory<UserContext>
-    {
-        public UserContext CreateDbContext(string[] args)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../bookStore.Api"))
-                .AddJsonFile("appsettings.json")
-                .Build();
+            modelBuilder.Entity<UserData>()
+                .ToTable("Users");
 
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-            var optionsBuilder = new DbContextOptionsBuilder<UserContext>();
-            optionsBuilder.UseSqlServer(connectionString);
-
-            return new UserContext();
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
@@ -608,388 +705,7 @@ namespace bookStore.DataAccess
 {
     public class DbSession
     {
-        public static string ConnectionString { get; set; } = "Server=localhost;Database=bookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;";
-    }
-}
-
-
-==================================================
-FILE: bookStore.DataAccess\Migrations\20260428212628_InitialCreate.cs
-==================================================
-
-using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
-
-namespace bookStore.DataAccess.Migrations
-{
-    /// <inheritdoc />
-    public partial class InitialCreate : Migration
-    {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "Books",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CoverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Books", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderItems",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_BookId",
-                table: "OrderItems",
-                column: "BookId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderId",
-                table: "OrderItems",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
-                table: "Orders",
-                column: "UserId");
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "OrderItems");
-
-            migrationBuilder.DropTable(
-                name: "Books");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
-        }
-    }
-}
-
-
-==================================================
-FILE: bookStore.DataAccess\Migrations\BookContextModelSnapshot.cs
-==================================================
-
-// <auto-generated />
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using bookStore.DataAccess.Context;
-
-#nullable disable
-
-namespace bookStore.DataAccess.Migrations
-{
-    [DbContext(typeof(BookContext))]
-    partial class BookContextModelSnapshot : ModelSnapshot
-    {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
-#pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.26")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("bookStore.Domain.Entities.Book", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CoverImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("bookStore.Domain.Entities.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("bookStore.Domain.Entities.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("bookStore.Domain.Entities.Order", b =>
-                {
-                    b.HasOne("bookStore.Domain.Entities.UserData", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("bookStore.Domain.Entities.OrderItem", b =>
-                {
-                    b.HasOne("bookStore.Domain.Entities.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("bookStore.Domain.Entities.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("bookStore.Domain.Entities.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-#pragma warning restore 612, 618
-        }
-    }
-}
-
-
-==================================================
-FILE: bookStore.DataAccess\Migrations\User\20260428212736_InitialCreate.cs
-==================================================
-
-using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
-
-namespace bookStore.DataAccess.Migrations.User
-{
-    /// <inheritdoc />
-    public partial class InitialCreate : Migration
-    {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RegisteredOn = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Users");
-        }
-    }
-}
-
-
-==================================================
-FILE: bookStore.DataAccess\Migrations\User\UserContextModelSnapshot.cs
-==================================================
-
-// <auto-generated />
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using bookStore.DataAccess.Context;
-
-#nullable disable
-
-namespace bookStore.DataAccess.Migrations.User
-{
-    [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
-    {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
-#pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.26")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("bookStore.Domain.Entities.UserData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("RegisteredOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-#pragma warning restore 612, 618
-        }
+        public static string ConnectionStrings { get; set; } = "Server=localhost;Database=bookStoreDb;Trusted_Connection=True;TrustServerCertificate=True;";
     }
 }
 
@@ -1016,7 +732,7 @@ FILE: bookStore.Domain\Entities\Book\Book.cs
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace bookStore.Domain.Entities.Book
+namespace bookStore.Domain.Entities
 {
     public class Book
     {
@@ -1031,6 +747,10 @@ namespace bookStore.Domain.Entities.Book
         [Required]
         public string Author { get; set; } = string.Empty;
 
+        [Required]
+        public int CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
         public CategoryData Category { get; set; }
 
         [Required]
@@ -1059,7 +779,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bookStore.Domain.Entities.Book
+namespace bookStore.Domain.Entities
 {
     public class BookImgData
     {
@@ -1072,6 +792,9 @@ namespace bookStore.Domain.Entities.Book
 
         [Required]
         public int BookId { get; set; }
+
+        [ForeignKey("BookId")]
+        public virtual Book Book { get; set; } = null!;
 
         public bool IsActive { get; set; } = true;
     }
@@ -1090,7 +813,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bookStore.Domain.Entities.Book
+namespace bookStore.Domain.Entities
 {
     public class CategoryData
     {
@@ -1131,7 +854,10 @@ namespace bookStore.Domain.Entities.Cart
 
         [Required]
         [Display(Name = "User")]
+        [ForeignKey(nameof(UserId))]    
         public int UserId { get; set; }
+
+        public UserData User { get; set; } = null!;
 
         [Required]
         [Display(Name = "CreatedAt")]
@@ -1181,6 +907,41 @@ namespace bookStore.Domain.Entities.Cart
 
         [ForeignKey(nameof(CartId))]
         public Cart Cart { get; set; } = null!;
+
+        [ForeignKey(nameof(BookId))]
+        public virtual Book Book { get; set; } = null!;
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Entities\Favorite\Favorite.cs
+==================================================
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using bookStore.Domain.Entities;
+
+namespace bookStore.Domain.Entities.Favorite
+{
+    public class Favorite
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public int UserId { get; set; } 
+
+        public int BookId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public UserData User { get; set; } = null!;
+        public virtual Book Books { get; set; }  
     }
 }
 
@@ -1199,6 +960,9 @@ namespace bookStore.Domain.Entities.Order
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public UserData User { get; set; } = null!;
 
         public int UserId { get; set; }
 
@@ -1479,6 +1243,29 @@ namespace bookStore.Domain.Models.Cart
         public int CartId { get; set; }
         public int BookId { get; set; }
         public int Quantity { get; set; }
+    }
+}
+
+
+==================================================
+FILE: bookStore.Domain\Models\Favorite\FavoriteDto.cs
+==================================================
+
+using bookStore.Domain.Models.Book;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bookStore.Domain.Models.Favorite
+{
+    public class FavoriteDto
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int BookId { get; set; }
+        public BookDto? Book { get; set; }
     }
 }
 

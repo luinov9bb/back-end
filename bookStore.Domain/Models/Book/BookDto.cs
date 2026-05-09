@@ -1,4 +1,4 @@
-﻿using bookStore.Domain.Entities;
+using bookStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace bookStore.Domain.Models.Book
         public string Category { get; set; }
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
+        public int Stock { get; set; }
         public string? CoverImageUrl { get; set; }
     }
 }

@@ -1,5 +1,8 @@
 using bookStore.Domain.Entities;
 using bookStore.Domain.Entities.Cart;
+using bookStore.Domain.Entities.Favorite;
+using bookStore.Domain.Entities.Order;
+using bookStore.Domain.Entities.Review;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookStore.DataAccess.Context
@@ -23,9 +26,17 @@ namespace bookStore.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<BookCategory>();
+            modelBuilder.Ignore<CategoryData>();
+            modelBuilder.Ignore<BookImgData>();
+            modelBuilder.Ignore<Favorite>();
+            modelBuilder.Ignore<Review>();
+            modelBuilder.Ignore<Order>();
+            modelBuilder.Ignore<OrderItem>();
+
             modelBuilder.Entity<UserData>(e =>
             {
-                e.ToTable("Users");
+                e.ToTable("Users", t => t.ExcludeFromMigrations());
                 e.Ignore(u => u.Orders);
                 e.Ignore(u => u.Favorites);
                 e.Ignore(u => u.Reviews);
@@ -49,11 +60,14 @@ namespace bookStore.DataAccess.Context
                 .HasForeignKey(ci => ci.BookId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Book>()
-                .Ignore(b => b.Images)
-                .Ignore(b => b.BookCategories)
-                .Ignore(b => b.Favorites)
-                .Ignore(b => b.Reviews);
+            modelBuilder.Entity<Book>(e =>
+            {
+                e.ToTable("Books", t => t.ExcludeFromMigrations());
+                e.Ignore(b => b.Images);
+                e.Ignore(b => b.BookCategories);
+                e.Ignore(b => b.Favorites);
+                e.Ignore(b => b.Reviews);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

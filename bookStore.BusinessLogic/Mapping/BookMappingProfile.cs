@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +15,15 @@ namespace bookStore.BusinessLogic.Mapping
         {
             CreateMap<Book, BookDto>()
                 .ForMember(dest => dest.Category,
-                    opt => opt.MapFrom(src => src.Category.Name))
+                    opt => opt.MapFrom(src =>
+                        string.Join(", ",
+                            src.BookCategories
+                                .OrderBy(bc => bc.CategoryId)
+                                .Select(bc => bc.Category.Name))))
                 .ForMember(dest => dest.CoverImageUrl,
                     opt => opt.MapFrom(src =>
-                        src.Images.FirstOrDefault(i => i.IsActive)!.Url));
+                        src.Images.Where(i => i.IsActive).Select(i => i.Url).FirstOrDefault()
+                        ?? src.Images.Select(i => i.Url).FirstOrDefault()));
 
             CreateMap<BookDto, Book>();
         }

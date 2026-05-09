@@ -2,7 +2,9 @@ using bookStore.BusinessLogic;
 
 var builder = WebApplication.CreateBuilder(args);
 
-bookStore.DataAccess.DbSession.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+bookStore.DataAccess.DbSession.ConnectionStrings =
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? bookStore.DataAccess.DbSession.ConnectionStrings;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

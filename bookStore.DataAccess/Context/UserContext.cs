@@ -1,4 +1,8 @@
 using bookStore.Domain.Entities;
+using bookStore.Domain.Entities.Cart;
+using bookStore.Domain.Entities.Favorite;
+using bookStore.Domain.Entities.Order;
+using bookStore.Domain.Entities.Review;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookStore.DataAccess.Context
@@ -21,6 +25,17 @@ namespace bookStore.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Book>();
+            modelBuilder.Ignore<BookImgData>();
+            modelBuilder.Ignore<BookCategory>();
+            modelBuilder.Ignore<CategoryData>();
+            modelBuilder.Ignore<Cart>();
+            modelBuilder.Ignore<CartItem>();
+            modelBuilder.Ignore<Favorite>();
+            modelBuilder.Ignore<Review>();
+            modelBuilder.Ignore<Order>();
+            modelBuilder.Ignore<OrderItem>();
+
             modelBuilder.Entity<UserData>(e =>
             {
                 e.ToTable("Users");

@@ -1,10 +1,6 @@
-﻿using bookStore.Domain.Entities.Order;
+using bookStore.Domain.Entities;
+using bookStore.Domain.Entities.Order;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace bookStore.DataAccess.Context
 {
@@ -13,9 +9,41 @@ namespace bookStore.DataAccess.Context
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public OrderContext() { }
+
+        public OrderContext(DbContextOptions<OrderContext> options) : base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserData>(e =>
+            {
+                e.ToTable("Users");
+                e.Ignore(u => u.Carts);
+                e.Ignore(u => u.Favorites);
+                e.Ignore(u => u.Reviews);
+            });
+
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.Items)
+                .WithOne(i => i.Order)
+                .HasForeignKey(i => i.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

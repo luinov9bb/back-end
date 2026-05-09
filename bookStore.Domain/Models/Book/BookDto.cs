@@ -1,4 +1,4 @@
-﻿using bookStore.Domain.Entities.Book;
+﻿using bookStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,16 +1,16 @@
 using bookStore.Domain.Entities;
-using bookStore.Domain.Entities.Favorite;
+using bookStore.Domain.Entities.Review;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookStore.DataAccess.Context
 {
-    public class FavoriteContext : DbContext
+    public class ReviewContext : DbContext
     {
-        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
-        public FavoriteContext() { }
+        public ReviewContext() { }
 
-        public FavoriteContext(DbContextOptions<FavoriteContext> options) : base(options) { }
+        public ReviewContext(DbContextOptions<ReviewContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,22 +27,22 @@ namespace bookStore.DataAccess.Context
                 e.ToTable("Users");
                 e.Ignore(u => u.Orders);
                 e.Ignore(u => u.Carts);
-                e.Ignore(u => u.Reviews);
+                e.Ignore(u => u.Favorites);
             });
 
-            modelBuilder.Entity<Favorite>(e =>
+            modelBuilder.Entity<Review>(e =>
             {
-                e.HasOne(f => f.User)
-                    .WithMany(u => u.Favorites)
-                    .HasForeignKey(f => f.UserId)
+                e.HasOne(r => r.User)
+                    .WithMany(u => u.Reviews)
+                    .HasForeignKey(r => r.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                e.HasOne(f => f.Book)
-                    .WithMany(b => b.Favorites)
-                    .HasForeignKey(f => f.BookId)
+                e.HasOne(r => r.Book)
+                    .WithMany(b => b.Reviews)
+                    .HasForeignKey(r => r.BookId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                e.HasIndex(f => new { f.UserId, f.BookId })
+                e.HasIndex(r => new { r.UserId, r.BookId })
                     .IsUnique();
             });
 
@@ -50,7 +50,7 @@ namespace bookStore.DataAccess.Context
                 .Ignore(b => b.Images)
                 .Ignore(b => b.BookCategories)
                 .Ignore(b => b.CartItems)
-                .Ignore(b => b.Reviews);
+                .Ignore(b => b.Favorites);
 
             base.OnModelCreating(modelBuilder);
         }

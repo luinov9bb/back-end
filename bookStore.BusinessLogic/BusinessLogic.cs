@@ -1,4 +1,5 @@
 using bookStore.BusinessLogic.Functions.Books;
+using bookStore.BusinessLogic.Functions.Cart;
 using bookStore.BusinessLogic.Functions.Categories;
 using bookStore.BusinessLogic.Interfaces;
 
@@ -21,6 +22,11 @@ namespace bookStore.BusinessLogic
         public ICategoryActions GetCategoryActions()
         {
             return new CategoryFlow();
+        }
+
+        public ICartActions GetCartActions()
+        {
+            return new CartFlow();
         }
     }
 }

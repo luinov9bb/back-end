@@ -1,3 +1,4 @@
+using bookStore.BusinessLogic.Functions.Auth;
 using bookStore.BusinessLogic.Functions.Books;
 using bookStore.BusinessLogic.Functions.Cart;
 using bookStore.BusinessLogic.Functions.Categories;
@@ -45,6 +46,11 @@ namespace bookStore.BusinessLogic
         public IReviewActions GetReviewActions()
         {
             return new ReviewFlow();
+        }
+
+        public IAuthActions GetAuthActions()
+        {
+            return new AuthFlow();
         }
     }
 }

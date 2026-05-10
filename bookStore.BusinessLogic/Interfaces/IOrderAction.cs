@@ -1,16 +1,15 @@
-﻿using bookStore.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using bookStore.Domain.Models.Order;
 using bookStore.Domain.Models.Base;
+using bookStore.Domain.Models.Order;
 
 namespace bookStore.BusinessLogic.Interfaces
 {
     public interface IOrderAction
     {
-        List<OrderItemDto> GetAllOrders();
+        List<OrderDto> GetAllOrdersAction();
+        List<OrderDto> GetOrdersByUserAction(int userId);
+        OrderDto? GetOrderByIdAction(int id);
+        ResponceMsg ResponseOrderCreateAction(OrderDto dto);
+        ResponceMsg ResponseOrderUpdateAction(OrderDto dto);
+        ResponceMsg ResponseOrderDeleteAction(int id);
     }
 }

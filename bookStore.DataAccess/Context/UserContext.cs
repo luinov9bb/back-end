@@ -39,6 +39,8 @@ namespace bookStore.DataAccess.Context
             modelBuilder.Entity<UserData>(e =>
             {
                 e.ToTable("Users");
+                e.HasIndex(u => u.Username).IsUnique();
+                e.HasIndex(u => u.Email).IsUnique();
                 e.Ignore(u => u.Orders);
                 e.Ignore(u => u.Carts);
                 e.Ignore(u => u.Favorites);

@@ -1,4 +1,5 @@
 using bookStore.BusinessLogic.Functions.Books;
+using bookStore.BusinessLogic.Functions.Categories;
 using bookStore.BusinessLogic.Interfaces;
 
 namespace bookStore.BusinessLogic
@@ -15,6 +16,11 @@ namespace bookStore.BusinessLogic
         public IBookActions GetBookActions()
         {
             return new BookFlow();
+        }
+
+        public ICategoryActions GetCategoryActions()
+        {
+            return new CategoryFlow();
         }
     }
 }

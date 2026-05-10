@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,12 @@ namespace bookStore.Domain.Models.Review
 {
     public class UpdateReviewDto
     {
+        [Required(ErrorMessage = "Review ID is required")]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "User ID is required")]
+        public int UserId { get; set; }
+
         [Required(ErrorMessage = "Rating is required")]
         [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5")]
         public int Rating { get; set; }

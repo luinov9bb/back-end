@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -8,6 +8,10 @@ namespace bookStore.Domain.Models.Review
 {
     public class CreateReviewDto
     {
+        [Required(ErrorMessage = "User ID is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "User ID must be positive")]
+        public int UserId { get; set; }
+
         [Required(ErrorMessage = "Book ID is required")]
         public int BookId { get; set; }
 

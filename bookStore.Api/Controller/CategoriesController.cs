@@ -1,6 +1,7 @@
 using bookStore.BusinessLogic;
 using bookStore.BusinessLogic.Interfaces;
 using bookStore.Domain.Models.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookStore.Api.Controllers
@@ -17,12 +18,14 @@ namespace bookStore.Api.Controllers
             _categories = bl.GetCategoryActions();
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_categories.GetAllCategoriesAction());
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
@@ -30,18 +33,21 @@ namespace bookStore.Api.Controllers
             return category == null ? NotFound() : Ok(category);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create([FromBody] CategoryDto dto)
         {
             return Ok(_categories.ResponseCategoryCreateAction(dto));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult Update([FromBody] CategoryDto dto)
         {
             return Ok(_categories.ResponseCategoryUpdateAction(dto));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {

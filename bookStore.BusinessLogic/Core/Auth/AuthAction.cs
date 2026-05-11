@@ -1,8 +1,13 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using bookStore.BusinessLogic.Configuration;
 using bookStore.DataAccess.Context;
 using bookStore.Domain.Entities;
 using bookStore.Domain.Enums;
 using bookStore.Domain.Models.Base;
 using bookStore.Domain.Models.User;
+using Microsoft.IdentityModel.Tokens;
 
 namespace bookStore.BusinessLogic.Core.Auth
 {
@@ -18,6 +23,39 @@ namespace bookStore.BusinessLogic.Core.Auth
                 RegisteredOn = u.RegisteredOn,
                 IsActive = u.IsActive
             };
+
+        private static (string Token, DateTime ExpiresAt) GenerateJwt(UserData user)
+        {
+            var options = JwtOptions.Current;
+            if (string.IsNullOrWhiteSpace(options.Key) || options.Key.Length < 32)
+            {
+                throw new InvalidOperationException("Jwt key must be at least 32 characters long.");
+            }
+
+            var expiresAt = DateTime.UtcNow.AddMinutes(Math.Max(1, options.ExpiresMinutes));
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Key));
+            var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new List<Claim>
+            {
+                new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new(JwtRegisteredClaimNames.UniqueName, user.Username),
+                new(JwtRegisteredClaimNames.Email, user.Email),
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Name, user.Username),
+                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Role, user.Role.ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: options.Issuer,
+                audience: options.Audience,
+                claims: claims,
+                expires: expiresAt,
+                signingCredentials: credentials);
+
+            return (new JwtSecurityTokenHandler().WriteToken(token), expiresAt);
+        }
 
         protected ResponceMsg ExecuteRegisterAction(UserCreateDto dto)
         {
@@ -91,10 +129,14 @@ namespace bookStore.BusinessLogic.Core.Auth
                 return new LoginResultDto { IsSuccess = false, Message = "Учётная запись отключена." };
             }
 
+            var jwt = GenerateJwt(user);
+
             return new LoginResultDto
             {
                 IsSuccess = true,
                 Message = "OK",
+                Token = jwt.Token,
+                ExpiresAt = jwt.ExpiresAt,
                 User = ToPublicUserDto(user)
             };
         }

@@ -5,6 +5,7 @@ using bookStore.BusinessLogic.Functions.Categories;
 using bookStore.BusinessLogic.Functions.Favorite;
 using bookStore.BusinessLogic.Functions.Order;
 using bookStore.BusinessLogic.Functions.Review;
+using bookStore.BusinessLogic.Functions.Users;
 using bookStore.BusinessLogic.Interfaces;
 
 namespace bookStore.BusinessLogic
@@ -51,6 +52,11 @@ namespace bookStore.BusinessLogic
         public IAuthActions GetAuthActions()
         {
             return new AuthFlow();
+        }
+
+        public IUserActions GetUserActions()
+        {
+            return new UserFlow();
         }
     }
 }

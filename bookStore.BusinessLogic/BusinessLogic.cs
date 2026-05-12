@@ -14,11 +14,6 @@ namespace bookStore.BusinessLogic
     {
         public BusinessLogic() { }
 
-        public ISession GetSessionBL()
-        {
-            return new SessionBL();
-        }
-
         public IBookActions GetBookActions()
         {
             return new BookFlow();

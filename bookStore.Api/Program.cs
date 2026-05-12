@@ -1,6 +1,6 @@
 using System.Text;
-using bookStore.BusinessLogic;
 using bookStore.BusinessLogic.Configuration;
+using bookStore.BusinessLogic.Seed;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -71,7 +71,6 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddScoped<bookStore.BusinessLogic.Interfaces.ISession, bookStore.BusinessLogic.SessionBL>();
 
 var app = builder.Build();
 
@@ -80,6 +79,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+AuthSeed.EnsureAdmin(builder.Configuration);
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

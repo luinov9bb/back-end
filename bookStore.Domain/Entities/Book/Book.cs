@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace bookStore.Domain.Entities
@@ -27,6 +27,8 @@ namespace bookStore.Domain.Entities
 
         [Required]
         public int Stock { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
 
         public List< BookCategory> BookCategories { get; set; } = new();
         public List<Cart.CartItem> CartItems { get; set; } = new();

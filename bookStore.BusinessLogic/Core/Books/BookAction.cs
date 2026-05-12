@@ -14,6 +14,7 @@ namespace bookStore.BusinessLogic.Core.Books
 
         protected static IQueryable<Book> BooksQuery(BookContext db) =>
             db.Books
+                .Where(b => !b.IsDeleted)
                 .Include(b => b.BookCategories).ThenInclude(bc => bc.Category)
                 .Include(b => b.Images);
 
@@ -45,7 +46,8 @@ namespace bookStore.BusinessLogic.Core.Books
                 Author = dto.Author?.Trim() ?? string.Empty,
                 Description = dto.Description?.Trim() ?? string.Empty,
                 Price = dto.Price,
-                Stock = dto.Stock
+                Stock = dto.Stock,
+                IsDeleted = false
             };
             db.Books.Add(book);
             db.SaveChanges();
@@ -66,7 +68,7 @@ namespace bookStore.BusinessLogic.Core.Books
             using var db = new BookContext();
             var book = db.Books
                 .Include(b => b.BookCategories)
-                .FirstOrDefault(b => b.Id == dto.Id);
+                .FirstOrDefault(b => b.Id == dto.Id && !b.IsDeleted);
             if (book == null)
             {
                 return new ResponceMsg { IsSuccess = false, Message = "Книга не найдена." };
@@ -93,15 +95,15 @@ namespace bookStore.BusinessLogic.Core.Books
         protected ResponceMsg ExecuteBookDeleteAction(int id)
         {
             using var db = new BookContext();
-            var book = db.Books.FirstOrDefault(b => b.Id == id);
+            var book = db.Books.FirstOrDefault(b => b.Id == id && !b.IsDeleted);
             if (book == null)
             {
                 return new ResponceMsg { IsSuccess = false, Message = "Книга не найдена." };
             }
 
-            db.Books.Remove(book);
+            book.IsDeleted = true;
             db.SaveChanges();
-            return new ResponceMsg { IsSuccess = true, Message = "Книга удалена." };
+            return new ResponceMsg { IsSuccess = true, Message = "Книга скрыта из каталога." };
         }
 
         private static void ApplyCategoriesFromDto(BookContext db, int bookId, string? categoryNames)

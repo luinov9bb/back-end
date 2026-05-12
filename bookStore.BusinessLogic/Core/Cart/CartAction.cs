@@ -16,14 +16,16 @@ namespace bookStore.BusinessLogic.Core.ShoppingCart
                 UserId = cart.UserId,
                 CreatedAt = cart.CreatedAt,
                 UpdatedAt = cart.UpdatedAt,
-                Items = cart.Items.Select(i => new CartItemDto
-                {
-                    Id = i.Id,
-                    CartId = i.CartId,
-                    BookId = i.BookId,
-                    Quantity = i.Quantity,
-                    BookTitle = i.Book?.Title
-                }).ToList()
+                Items = cart.Items
+                    .Where(i => i.Book == null || !i.Book.IsDeleted)
+                    .Select(i => new CartItemDto
+                    {
+                        Id = i.Id,
+                        CartId = i.CartId,
+                        BookId = i.BookId,
+                        Quantity = i.Quantity,
+                        BookTitle = i.Book?.Title
+                    }).ToList()
             };
 
         private static Cart GetOrCreateCart(CartContext db, int userId)
@@ -77,7 +79,7 @@ namespace bookStore.BusinessLogic.Core.ShoppingCart
             }
 
             using var db = new CartContext();
-            var book = db.Set<Book>().AsNoTracking().FirstOrDefault(b => b.Id == dto.BookId);
+            var book = db.Set<Book>().AsNoTracking().FirstOrDefault(b => b.Id == dto.BookId && !b.IsDeleted);
             if (book == null)
             {
                 return new ResponceMsg { IsSuccess = false, Message = "Книга не найдена." };
@@ -139,7 +141,7 @@ namespace bookStore.BusinessLogic.Core.ShoppingCart
                 return new ResponceMsg { IsSuccess = false, Message = "Позиция не найдена." };
             }
 
-            var book = db.Set<Book>().AsNoTracking().FirstOrDefault(b => b.Id == item.BookId);
+            var book = db.Set<Book>().AsNoTracking().FirstOrDefault(b => b.Id == item.BookId && !b.IsDeleted);
             if (book == null)
             {
                 return new ResponceMsg { IsSuccess = false, Message = "Книга не найдена." };

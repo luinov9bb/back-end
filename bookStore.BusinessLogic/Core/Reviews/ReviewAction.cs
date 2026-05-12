@@ -28,7 +28,11 @@ namespace bookStore.BusinessLogic.Core.Reviews
             };
 
         private static IQueryable<ReviewEntity> ReviewsWithNav(ReviewContext db) =>
-            db.Reviews.AsNoTracking().Include(r => r.User).Include(r => r.Book);
+            db.Reviews
+                .AsNoTracking()
+                .Include(r => r.User)
+                .Include(r => r.Book)
+                .Where(r => !r.Book.IsDeleted);
 
         private static string? ValidateText(string? text)
         {
@@ -119,7 +123,7 @@ namespace bookStore.BusinessLogic.Core.Reviews
                 return new ResponceMsg { IsSuccess = false, Message = "Пользователь не найден." };
             }
 
-            if (!db.Set<Book>().AsNoTracking().Any(b => b.Id == dto.BookId))
+            if (!db.Set<Book>().AsNoTracking().Any(b => b.Id == dto.BookId && !b.IsDeleted))
             {
                 return new ResponceMsg { IsSuccess = false, Message = "Книга не найдена." };
             }

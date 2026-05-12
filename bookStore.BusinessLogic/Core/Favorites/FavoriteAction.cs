@@ -26,6 +26,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
                 Description = book.Description ?? string.Empty,
                 Price = book.Price,
                 Stock = book.Stock,
+                IsDeleted = book.IsDeleted,
                 CoverImageUrl = null
             };
         }
@@ -45,6 +46,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
             var list = db.Favorites
                 .AsNoTracking()
                 .Include(f => f.Book)
+                .Where(f => !f.Book.IsDeleted)
                 .OrderBy(f => f.UserId)
                 .ThenBy(f => f.Id)
                 .ToList();
@@ -62,7 +64,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
             var list = db.Favorites
                 .AsNoTracking()
                 .Include(f => f.Book)
-                .Where(f => f.UserId == userId)
+                .Where(f => f.UserId == userId && !f.Book.IsDeleted)
                 .OrderBy(f => f.Id)
                 .ToList();
             return list.Select(ToDto).ToList();
@@ -76,7 +78,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
             }
 
             using var db = new FavoriteContext();
-            var entity = db.Favorites.AsNoTracking().Include(f => f.Book).FirstOrDefault(f => f.Id == id);
+            var entity = db.Favorites.AsNoTracking().Include(f => f.Book).FirstOrDefault(f => f.Id == id && !f.Book.IsDeleted);
             return entity == null ? null : ToDto(entity);
         }
 
@@ -93,7 +95,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
                 return new ResponceMsg { IsSuccess = false, Message = "Пользователь не найден." };
             }
 
-            if (!db.Set<Book>().AsNoTracking().Any(b => b.Id == dto.BookId))
+            if (!db.Set<Book>().AsNoTracking().Any(b => b.Id == dto.BookId && !b.IsDeleted))
             {
                 return new ResponceMsg { IsSuccess = false, Message = "Книга не найдена." };
             }
@@ -137,7 +139,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
                 return new ResponceMsg { IsSuccess = false, Message = "Нельзя перенести запись другому пользователю." };
             }
 
-            if (!db.Set<Book>().AsNoTracking().Any(b => b.Id == dto.BookId))
+            if (!db.Set<Book>().AsNoTracking().Any(b => b.Id == dto.BookId && !b.IsDeleted))
             {
                 return new ResponceMsg { IsSuccess = false, Message = "Книга не найдена." };
             }

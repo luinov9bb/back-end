@@ -32,10 +32,15 @@ namespace bookStore.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] ULoginData dto)
+        public IActionResult Login([FromBody] LoginRequestDto request)
         {
-            dto.LoginIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-            dto.LoginDateTime = DateTime.UtcNow;
+            var dto = new ULoginData
+            {
+                Credential = request.Credential?.Trim() ?? string.Empty,
+                Password = request.Password ?? string.Empty,
+                LoginIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                LoginDateTime = DateTime.UtcNow,
+            };
 
             var result = _auth.LoginAction(dto);
             return result.IsSuccess ? Ok(result) : Unauthorized(result);

@@ -12,5 +12,6 @@ namespace bookStore.BusinessLogic.Interfaces
         ResponceMsg ResponseReviewCreateAction(CreateReviewDto dto);
         ResponceMsg ResponseReviewUpdateAction(UpdateReviewDto dto);
         ResponceMsg ResponseReviewDeleteAction(int id);
+        ResponceMsg ResponseReviewSetApprovalAction(int id, bool isApproved);
     }
 }

@@ -89,5 +89,19 @@ namespace bookStore.Api.Controllers
 
             return Ok(_reviews.ResponseReviewDeleteAction(id));
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("approval")]
+        public IActionResult SetApproval([FromBody] ReviewApprovalDto dto)
+        {
+            return Ok(_reviews.ResponseReviewSetApprovalAction(dto.Id, dto.IsApproved));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("admin/{id:int}")]
+        public IActionResult AdminDelete(int id)
+        {
+            return Ok(_reviews.ResponseReviewDeleteAction(id));
+        }
     }
 }

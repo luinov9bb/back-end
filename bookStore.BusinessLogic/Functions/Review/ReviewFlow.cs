@@ -20,5 +20,8 @@ namespace bookStore.BusinessLogic.Functions.Review
         public ResponceMsg ResponseReviewUpdateAction(UpdateReviewDto dto) => ExecuteReviewUpdateAction(dto);
 
         public ResponceMsg ResponseReviewDeleteAction(int id) => ExecuteReviewDeleteAction(id);
+
+        public ResponceMsg ResponseReviewSetApprovalAction(int id, bool isApproved) =>
+            ExecuteReviewSetApprovalAction(id, isApproved);
     }
 }

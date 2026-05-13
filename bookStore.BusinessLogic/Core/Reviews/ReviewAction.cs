@@ -66,7 +66,7 @@ namespace bookStore.BusinessLogic.Core.Reviews
 
             using var db = new ReviewContext();
             var list = ReviewsWithNav(db)
-                .Where(r => r.BookId == bookId)
+                .Where(r => r.BookId == bookId && r.IsApproved)
                 .OrderByDescending(r => r.CreatedAt)
                 .ToList();
             return list.Select(ToDto).ToList();
@@ -145,7 +145,7 @@ namespace bookStore.BusinessLogic.Core.Reviews
             });
             db.SaveChanges();
 
-            return new ResponceMsg { IsSuccess = true, Message = "Отзыв добавлен." };
+            return new ResponceMsg { IsSuccess = true, Message = "Отзыв отправлен на модерацию." };
         }
 
         protected ResponceMsg ExecuteReviewUpdateAction(UpdateReviewDto dto)
@@ -209,6 +209,27 @@ namespace bookStore.BusinessLogic.Core.Reviews
             db.SaveChanges();
 
             return new ResponceMsg { IsSuccess = true, Message = "Отзыв удалён." };
+        }
+
+        protected ResponceMsg ExecuteReviewSetApprovalAction(int id, bool isApproved)
+        {
+            if (id <= 0)
+            {
+                return new ResponceMsg { IsSuccess = false, Message = "Некорректный идентификатор отзыва." };
+            }
+
+            using var db = new ReviewContext();
+            var entity = db.Reviews.FirstOrDefault(r => r.Id == id);
+            if (entity == null)
+            {
+                return new ResponceMsg { IsSuccess = false, Message = "Отзыв не найден." };
+            }
+
+            entity.IsApproved = isApproved;
+            entity.UpdatedAt = DateTime.UtcNow;
+            db.SaveChanges();
+
+            return new ResponceMsg { IsSuccess = true, Message = isApproved ? "Отзыв опубликован." : "Отзыв снят с публикации." };
         }
     }
 }

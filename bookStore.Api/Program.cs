@@ -51,6 +51,24 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+var corsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+if (corsOrigins == null || corsOrigins.Length == 0)
+{
+    corsOrigins = new[]
+    {
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://localhost:4200"
+    };
+}
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("SpaCors", policy =>
+        policy.WithOrigins(corsOrigins).AllowAnyHeader().AllowAnyMethod());
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "bookStore API", Version = "v1" });
@@ -83,6 +101,7 @@ if (app.Environment.IsDevelopment())
 AuthSeed.EnsureAdmin(builder.Configuration);
 
 app.UseHttpsRedirection();
+app.UseCors("SpaCors");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

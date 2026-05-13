@@ -132,6 +132,144 @@ namespace bookStore.BusinessLogic.Core.Orders
             return new ResponceMsg { IsSuccess = true, Message = $"Заказ создан, номер {order.Id}." };
         }
 
+        private static void SoftDeleteOrderById(int orderId)
+        {
+            if (orderId <= 0)
+            {
+                return;
+            }
+
+            using var db = new OrderContext();
+            var order = db.Orders.FirstOrDefault(o => o.Id == orderId && !o.IsDeleted);
+            if (order == null)
+            {
+                return;
+            }
+
+            order.IsDeleted = true;
+            db.SaveChanges();
+        }
+
+        protected ResponceMsg ExecuteCheckoutFromCartAction(int userId)
+        {
+            if (userId <= 0)
+            {
+                return new ResponceMsg { IsSuccess = false, Message = "Некорректный пользователь." };
+            }
+
+            List<(int BookId, int Quantity, string BookInfo, decimal Price)> snapshot;
+            using (var cartDb = new CartContext())
+            {
+                var cart = cartDb.Carts
+                    .Include(c => c.Items)
+                    .ThenInclude(i => i.Book)
+                    .FirstOrDefault(c => c.UserId == userId);
+                if (cart == null || cart.Items.Count == 0)
+                {
+                    return new ResponceMsg { IsSuccess = false, Message = "Корзина пуста." };
+                }
+
+                if (cart.Items.Any(i => i.Book == null || i.Book.IsDeleted))
+                {
+                    return new ResponceMsg
+                    {
+                        IsSuccess = false,
+                        Message = "В корзине есть недоступные книги. Удалите такие позиции и повторите оформление."
+                    };
+                }
+
+                foreach (var line in cart.Items)
+                {
+                    if (line.Book!.Stock < line.Quantity)
+                    {
+                        return new ResponceMsg
+                        {
+                            IsSuccess = false,
+                            Message = $"Недостаточно экземпляров «{line.Book.Title}» на складе."
+                        };
+                    }
+                }
+
+                snapshot = cart.Items
+                    .Select(i => (i.BookId, i.Quantity,
+                        $"{i.Book!.Title} — {i.Book.Author}".Trim(),
+                        i.Book.Price))
+                    .ToList();
+            }
+
+            var total = snapshot.Sum(x => x.Price * x.Quantity);
+            int orderId;
+            using (var orderDb = new OrderContext())
+            {
+                var order = new OrderEntity
+                {
+                    UserId = userId,
+                    OrderDate = DateTime.UtcNow,
+                    TotalPrice = total,
+                    Status = OrderStatus.Validating,
+                    IsDeleted = false
+                };
+
+                foreach (var line in snapshot)
+                {
+                    order.Items.Add(new OrderItem
+                    {
+                        BookInfo = line.BookInfo,
+                        Quantity = line.Quantity,
+                        Price = line.Price
+                    });
+                }
+
+                orderDb.Orders.Add(order);
+                orderDb.SaveChanges();
+                orderId = order.Id;
+            }
+
+            try
+            {
+                using var bookDb = new BookContext();
+                foreach (var line in snapshot)
+                {
+                    var book = bookDb.Books.FirstOrDefault(b => b.Id == line.BookId && !b.IsDeleted);
+                    if (book == null || book.Stock < line.Quantity)
+                    {
+                        SoftDeleteOrderById(orderId);
+                        return new ResponceMsg
+                        {
+                            IsSuccess = false,
+                            Message = "Не удалось зарезервировать товар на складе. Повторите попытку."
+                        };
+                    }
+
+                    book.Stock -= line.Quantity;
+                }
+
+                bookDb.SaveChanges();
+            }
+            catch
+            {
+                SoftDeleteOrderById(orderId);
+                return new ResponceMsg
+                {
+                    IsSuccess = false,
+                    Message = "Ошибка при списании со склада. Повторите попытку."
+                };
+            }
+
+            using (var cartDb = new CartContext())
+            {
+                var cart = cartDb.Carts.Include(c => c.Items).First(c => c.UserId == userId);
+                if (cart.Items.Count > 0)
+                {
+                    cartDb.CartItems.RemoveRange(cart.Items);
+                    cart.UpdatedAt = DateTime.UtcNow;
+                    cartDb.SaveChanges();
+                }
+            }
+
+            return new ResponceMsg { IsSuccess = true, Message = $"Заказ создан, номер {orderId}." };
+        }
+
         protected ResponceMsg ExecuteOrderUpdateAction(OrderDto dto)
         {
             if (dto.Id <= 0)

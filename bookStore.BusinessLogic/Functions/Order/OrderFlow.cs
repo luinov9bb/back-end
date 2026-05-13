@@ -15,6 +15,8 @@ namespace bookStore.BusinessLogic.Functions.Order
 
         public ResponceMsg ResponseOrderCreateAction(OrderDto dto) => ExecuteOrderCreateAction(dto);
 
+        public ResponceMsg ResponseCheckoutFromCartAction(int userId) => ExecuteCheckoutFromCartAction(userId);
+
         public ResponceMsg ResponseOrderUpdateAction(OrderDto dto) => ExecuteOrderUpdateAction(dto);
 
         public ResponceMsg ResponseOrderDeleteAction(int id) => ExecuteOrderDeleteAction(id);

@@ -9,6 +9,7 @@ namespace bookStore.BusinessLogic.Interfaces
         List<OrderDto> GetOrdersByUserAction(int userId);
         OrderDto? GetOrderByIdAction(int id);
         ResponceMsg ResponseOrderCreateAction(OrderDto dto);
+        ResponceMsg ResponseCheckoutFromCartAction(int userId);
         ResponceMsg ResponseOrderUpdateAction(OrderDto dto);
         ResponceMsg ResponseOrderDeleteAction(int id);
     }

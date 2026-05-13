@@ -66,6 +66,17 @@ namespace bookStore.Api.Controllers
             return Ok(_orders.ResponseOrderCreateAction(dto));
         }
 
+        [HttpPost("checkout-from-cart")]
+        public IActionResult CheckoutFromCart([FromBody] CheckoutFromCartDto dto)
+        {
+            if (!User.CanAccessUser(dto.UserId))
+            {
+                return Forbid();
+            }
+
+            return Ok(_orders.ResponseCheckoutFromCartAction(dto.UserId));
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult Update([FromBody] OrderDto dto)

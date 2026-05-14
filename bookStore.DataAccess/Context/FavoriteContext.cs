@@ -27,7 +27,6 @@ namespace bookStore.DataAccess.Context
         {
             modelBuilder.Ignore<BookCategory>();
             modelBuilder.Ignore<CategoryData>();
-            modelBuilder.Ignore<BookImgData>();
             modelBuilder.Ignore<Cart>();
             modelBuilder.Ignore<CartItem>();
             modelBuilder.Ignore<Order>();
@@ -58,10 +57,18 @@ namespace bookStore.DataAccess.Context
                     .IsUnique();
             });
 
+            modelBuilder.Entity<BookImgData>(e =>
+            {
+                e.ToTable("BookImgs", t => t.ExcludeFromMigrations());
+            });
+
             modelBuilder.Entity<Book>(e =>
             {
                 e.ToTable("Books", t => t.ExcludeFromMigrations());
-                e.Ignore(b => b.Images);
+                e.HasMany(b => b.Images)
+                    .WithOne(img => img.Book)
+                    .HasForeignKey(img => img.BookId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 e.Ignore(b => b.BookCategories);
                 e.Ignore(b => b.CartItems);
                 e.Ignore(b => b.Reviews);

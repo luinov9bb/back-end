@@ -1,3 +1,4 @@
+using System.Linq;
 using bookStore.DataAccess.Context;
 using bookStore.Domain.Entities;
 using bookStore.Domain.Models.Base;
@@ -10,6 +11,18 @@ namespace bookStore.BusinessLogic.Core.Favorites
 {
     public class FavoriteAction
     {
+        private static string? ResolveCoverImageUrl(Book book)
+        {
+            var images = book.Images;
+            if (images == null || images.Count == 0)
+            {
+                return null;
+            }
+
+            return images.Where(i => i.IsActive).Select(i => i.Url).FirstOrDefault()
+                ?? images.Select(i => i.Url).FirstOrDefault();
+        }
+
         private static BookDto? ToBookDto(Book? book)
         {
             if (book == null)
@@ -27,7 +40,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
                 Price = book.Price,
                 Stock = book.Stock,
                 IsDeleted = book.IsDeleted,
-                CoverImageUrl = null
+                CoverImageUrl = ResolveCoverImageUrl(book)
             };
         }
 
@@ -64,6 +77,7 @@ namespace bookStore.BusinessLogic.Core.Favorites
             var list = db.Favorites
                 .AsNoTracking()
                 .Include(f => f.Book)
+                    .ThenInclude(b => b.Images)
                 .Where(f => f.UserId == userId && !f.Book.IsDeleted)
                 .OrderBy(f => f.Id)
                 .ToList();
@@ -78,7 +92,10 @@ namespace bookStore.BusinessLogic.Core.Favorites
             }
 
             using var db = new FavoriteContext();
-            var entity = db.Favorites.AsNoTracking().Include(f => f.Book).FirstOrDefault(f => f.Id == id && !f.Book.IsDeleted);
+            var entity = db.Favorites.AsNoTracking()
+                .Include(f => f.Book)
+                    .ThenInclude(b => b.Images)
+                .FirstOrDefault(f => f.Id == id && !f.Book.IsDeleted);
             return entity == null ? null : ToDto(entity);
         }
 

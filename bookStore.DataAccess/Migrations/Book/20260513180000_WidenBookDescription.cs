@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace bookStore.DataAccess.Migrations.Book
 {
+    /// <inheritdoc />
     public partial class WidenBookDescription : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
@@ -19,6 +21,7 @@ namespace bookStore.DataAccess.Migrations.Book
                 oldMaxLength: 500);
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(

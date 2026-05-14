@@ -59,6 +59,10 @@ namespace bookStore.DataAccess.Context
                 .IsUnique();
 
             modelBuilder.Entity<Book>()
+                .Property(b => b.Description)
+                .HasColumnType("nvarchar(max)");
+
+            modelBuilder.Entity<Book>()
                 .Ignore(b => b.CartItems)
                 .Ignore(b => b.Favorites)
                 .Ignore(b => b.Reviews);

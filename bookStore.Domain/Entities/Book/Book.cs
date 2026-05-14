@@ -16,9 +16,7 @@ namespace bookStore.Domain.Entities
         [Required]
         public string Author { get; set; } = string.Empty;
 
-        [Required]
-        [StringLength(500)]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         public decimal Price { get; set; }

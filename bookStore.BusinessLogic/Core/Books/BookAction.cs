@@ -52,6 +52,7 @@ namespace bookStore.BusinessLogic.Core.Books
             db.Books.Add(book);
             db.SaveChanges();
 
+            ApplyCoverImageFromDto(db, book.Id, dto.CoverImageUrl);
             ApplyCategoriesFromDto(db, book.Id, dto.Category);
             db.SaveChanges();
 
@@ -86,6 +87,7 @@ namespace bookStore.BusinessLogic.Core.Books
             book.Stock = dto.Stock;
 
             db.BookCategories.RemoveRange(book.BookCategories);
+            ApplyCoverImageFromDto(db, book.Id, dto.CoverImageUrl);
             ApplyCategoriesFromDto(db, book.Id, dto.Category);
 
             db.SaveChanges();
@@ -104,6 +106,28 @@ namespace bookStore.BusinessLogic.Core.Books
             book.IsDeleted = true;
             db.SaveChanges();
             return new ResponceMsg { IsSuccess = true, Message = "Книга скрыта из каталога." };
+        }
+
+        private static void ApplyCoverImageFromDto(BookContext db, int bookId, string? coverUrl)
+        {
+            var existing = db.BookImgs.Where(i => i.BookId == bookId).ToList();
+            if (existing.Count > 0)
+            {
+                db.BookImgs.RemoveRange(existing);
+            }
+
+            var trimmed = coverUrl?.Trim();
+            if (string.IsNullOrWhiteSpace(trimmed))
+            {
+                return;
+            }
+
+            db.BookImgs.Add(new BookImgData
+            {
+                BookId = bookId,
+                Url = trimmed,
+                IsActive = true,
+            });
         }
 
         private static void ApplyCategoriesFromDto(BookContext db, int bookId, string? categoryNames)
